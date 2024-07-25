@@ -29,6 +29,9 @@ func NewRoutes() *Routes {
 			EN: "Welcome this server",
 		}))
 	})
+	r.HttpServer.Use(func(c *fiber.Ctx) error {
+		return c.Status(http.StatusNotFound).JSON(response_mapper.RenderStruct(http.StatusNotFound, response_mapper.ErrRouteNotFound()))
+	})
 
 	return r
 }
