@@ -46,11 +46,11 @@ func NewTeamMemberDelivery(
 	}
 }
 func (h *TeamMemberHandler) Mount(group fiber.Router) {
-	group.Post("", h.Create, middlewares.BasicAuth(h.Cfg.App.BasicUsername, h.Cfg.App.BasicPassword))
+	group.Post("", middlewares.BasicAuth(h.Cfg.App.BasicUsername, h.Cfg.App.BasicPassword), h.Create)
 	group.Get("", h.GetList)
 	group.Get("/:id", h.GetDetail)
-	group.Delete("/:id", h.Delete, middlewares.BasicAuth(h.Cfg.App.BasicUsername, h.Cfg.App.BasicPassword))
-	group.Put("/:id", h.Update, middlewares.BasicAuth(h.Cfg.App.BasicUsername, h.Cfg.App.BasicPassword))
+	group.Delete("/:id", middlewares.BasicAuth(h.Cfg.App.BasicUsername, h.Cfg.App.BasicPassword), h.Delete)
+	group.Put("/:id", middlewares.BasicAuth(h.Cfg.App.BasicUsername, h.Cfg.App.BasicPassword), h.Update)
 }
 
 func (h *TeamMemberHandler) getParamID(c *fiber.Ctx) (uint64, error) {
